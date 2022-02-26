@@ -23,11 +23,11 @@ const Navbar = () => {
                     {/* <Link href="/wishlist" passHref>
                         <HeartOutlined className="text-xl mx-4 cursor-pointer" />
                     </Link> */}
-                    <Link href="/cart" passHref>
-                        <FaRegUser className='text-2xl' />
+                    <Link href="/account-login" passHref>
+                        <FaRegUser className='text-xl' />
                     </Link>
                     <Link href="/cart" passHref>
-                        <RiShoppingCart2Line className='text-2xl' />
+                        <RiShoppingCart2Line className='text-xl' />
                     </Link>
                 </div>
             </div>

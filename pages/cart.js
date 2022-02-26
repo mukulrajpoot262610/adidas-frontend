@@ -4,8 +4,8 @@ import Link from 'next/link'
 // import { ArrowRightOutlined } from '@ant-design/icons'
 // import { Col, message, Row, Spin } from 'antd'
 // import { useSelector, useDispatch } from 'react-redux'
-import CartCover from '../components/Card/CartCover'
-import BillingCard from '../components/Card/BillingCard'
+// import CartCover from '../components/Card/CartCover'
+// import BillingCard from '../components/Card/BillingCard'
 
 const Cart = () => {
 

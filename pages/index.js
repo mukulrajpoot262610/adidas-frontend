@@ -1,19 +1,14 @@
 import Head from 'next/head'
 import Header from '../components/Home/Header'
-// import CategoryCard from '../components/Card/CategoryCard'
 import GenderCard from '../components/Card/GenderCard'
-// import CATEGORY_LIST from '../components/List/Category.list'
 import PRODUCT_LIST from '../components/List/Product.list'
 import ProductCard from '../components/Card/ProductCard'
 import Info from '../components/Home/Info'
 import JoinBanner from '../components/Home/JoinBanner'
-// import { getProducts } from '../services/lib/productHandler'
 import GENDER_LIST from '../components/List/Gender.list'
 import { HiArrowNarrowRight } from 'react-icons/hi'
 
 export default function Home({ products }) {
-
-  // const { isAuth } = useSelector(state => state.rootReducer.user)
 
   return (
     <div className="min-h-screen w-full">
@@ -43,18 +38,6 @@ export default function Home({ products }) {
               GENDER_LIST.map((e) => <GenderCard key={e.id} name={e.name} image={e.image} link={e.link} />)
             }
           </div>
-
-          {/* <div className="flex flex-wrap justify-center mt-6">
-            {
-              CATEGORY_LIST.map((e) => <CategoryCard key={e.id} name={e.name} image={e.image} link={e.link} />)
-            }
-          </div> */}
-
-          {/* <div className="flex flex-wrap justify-center">
-            {
-              products.length > 0 ? products.map((e) => <ProductCard data={e} key={e._id} />) : "Loading..."
-            }
-          </div> */}
         </div>
 
         <div className='w-full relative flex justify-center'>
