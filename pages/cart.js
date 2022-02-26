@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { HiArrowNarrowRight } from 'react-icons/hi'
+import { useSelector } from 'react-redux'
+import CartCover from '../components/Card/CartCover'
+import BillingCard from '../components/Card/BillingCard'
 
 const Cart = () => {
 
-    const products = []
-    // const cart = useSelector(state => state.cart)
-    // const { products, quantity, total } = cart;
+    const cart = useSelector(state => state.cart)
+    const { products, quantity, total } = cart;
 
     const handleCoupanCode = () => {
         message.error("This code was not recognised, please check it and try again.")
@@ -21,7 +23,7 @@ const Cart = () => {
             </Head>
 
             <div className="lg:w-9/12 w-11/12 p-4 mt-10">
-                <div className="flex flex-col xl:flex-row">
+                <div className="flex flex-col xl:flex-row gap-16">
                     <div className="p-4 w-8/12">
                         {
                             products.length === 0 ? (
@@ -36,16 +38,15 @@ const Cart = () => {
                                 <>
                                     <h1 className="font-bold text-4xl uppercase">YOUR BAG</h1>
                                     <p className="my-4 text-base">TOTAL <span className=''>[{quantity} item]</span> &nbsp; ₹{total}</p>
-                                    {/* <div className="">
+                                    <div className="flex flex-col gap-4">
                                         {
                                             products.map((e, index) => <CartCover key={index} data={e} />)
                                         }
-                                    </div> */}
+                                    </div>
                                 </>
                             )
                         }
                     </div>
-
 
                     <div className="p-4 w-4/12">
                         {
@@ -59,7 +60,7 @@ const Cart = () => {
                                 </>
                             ) : (
                                 <>
-                                    {/* <BillingCard /> */}
+                                    <BillingCard />
                                     <Link href="/delivery" passHref>
                                         <button className="font-bold cursor-pointer bg-black text-white w-full py-4 px-6 my-4 flex items-center uppercase">CheckOut &nbsp; <HiArrowNarrowRight /></button>
                                     </Link>

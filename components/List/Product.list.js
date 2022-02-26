@@ -61,7 +61,7 @@ const PRODUCT = [
         name: "SOLARBOOST 3 TOKYO SHOES",
         category: "running-shoes",
         price: "15999.00",
-        salePrice: "95999.00",
+        salePrice: "9599.00",
         thumbnail: "https://assets.adidas.com/images/h_840,f_auto,q_auto:sensitive,fl_lossy,c_fill,g_auto/41a7ec8be45d4b5fb9e6ad200060ca2a_9366/Solarboost_3_Tokyo_Shoes_White_S42994_01_standard.jpg",
         image: "https://assets.adidas.com/images/w_600,f_auto,q_auto/aee4cb09cd974aeeb6bead200060e4d7_9366/Solarboost_3_Tokyo_Shoes_White_S42994.jpg",
         subname: "ROAD RUNNING SHOES BUILT FOR TRAINING OR RACE DAY.",

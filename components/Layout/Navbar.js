@@ -3,10 +3,11 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { RiShoppingCart2Line } from 'react-icons/ri'
 import { FaUser, FaUserAlt, FaRegUser } from 'react-icons/fa'
+import { useSelector } from 'react-redux'
 
 const Navbar = () => {
 
-    // const quantity = useSelector(state => state.cart?.quantity)
+    const quantity = useSelector(state => state.cart?.quantity)
     // const state = useSelector(state => state.rootReducer.user)
 
     const isAuth = false
@@ -24,10 +25,13 @@ const Navbar = () => {
                         <HeartOutlined className="text-xl mx-4 cursor-pointer" />
                     </Link> */}
                     <Link href="/account-login" passHref>
-                        <FaRegUser className='text-xl' />
+                        <FaRegUser className='text-2xl' />
                     </Link>
                     <Link href="/cart" passHref>
-                        <RiShoppingCart2Line className='text-xl' />
+                        <div className='relative'>
+                            <span className='-top-2 absolute bg-black text-white -right-2 p-2 text-xs rounded-full h-5 w-5 flex justify-center items-center'>{quantity}</span>
+                            <RiShoppingCart2Line className='text-2xl' />
+                        </div>
                     </Link>
                 </div>
             </div>
