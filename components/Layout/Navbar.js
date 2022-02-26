@@ -1,6 +1,8 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { RiShoppingCart2Line } from 'react-icons/ri'
+import { FaUser, FaUserAlt, FaRegUser } from 'react-icons/fa'
 
 const Navbar = () => {
 
@@ -17,12 +19,15 @@ const Navbar = () => {
                 </Link>
             </div>
             <div className="flex items-center">
-                <div className="flex items-center">
+                <div className="flex items-center gap-4">
                     {/* <Link href="/wishlist" passHref>
                         <HeartOutlined className="text-xl mx-4 cursor-pointer" />
                     </Link> */}
                     <Link href="/cart" passHref>
-                        cart
+                        <FaRegUser className='text-2xl' />
+                    </Link>
+                    <Link href="/cart" passHref>
+                        <RiShoppingCart2Line className='text-2xl' />
                     </Link>
                 </div>
             </div>
