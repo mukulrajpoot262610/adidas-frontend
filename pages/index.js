@@ -72,24 +72,3 @@ export default function Home({ products }) {
     </div>
   )
 }
-
-
-// export async function getServerSideProps() {
-
-//   let products = [];
-
-//   try {
-//     const res = await getProducts();
-//     if (res.data.success) {
-//       products = res.data.products
-//     } else {
-//       products = []
-//     }
-//   } catch (err) {
-//     console.log(err.message)
-//   }
-
-//   return {
-//     props: { products }, // will be passed to the page component as props
-//   }
-// }
