@@ -1,47 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
-import { CarOutlined, ArrowRightOutlined } from '@ant-design/icons'
+import { HiArrowNarrowRight } from 'react-icons/hi'
+import { AiFillCar } from 'react-icons/ai'
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
-import { Col, Row, Form, Input, message } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
-import OrderCover from '../components/Card/OrderCover'
-import AuthCard from '../components/Card/AuthCard';
-import Stepper from '../components/Steps/Stepper';
 import { useRouter } from 'next/router';
-import { updateUserData } from '../services/lib/userHandler';
 import BillingCard from '../components/Card/BillingCard';
+import AuthCard from '../components/Card/AuthCard';
+import OrderCover from '../components/Card/OrderCover';
 
 const Delivery = ({ }) => {
 
     const dispatch = useDispatch()
     const router = useRouter()
     const cart = useSelector(state => state.cart)
-    const { isAuth, currentUser } = useSelector(state => state.user)
+    // const { isAuth, currentUser } = useSelector(state => state.user)
     const { products, quantity, total } = cart;
 
     const [country, setCountry] = useState()
     const [region, setRegion] = useState()
-
-    const onFinish = async (values) => {
-
-        if (!isAuth) {
-            message.error('Please Sign in to Continue!')
-        }
-
-
-        try {
-            const res = await updateUserData(currentUser.user._id, { address: values });
-            sessionStorage.setItem('address', JSON.stringify(values))
-            router.push('/payment')
-        } catch (err) {
-            console.log(err.response)
-        }
-    };
-
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-    };
-
 
     return (
         <div className="flex flex-col items-center justify-center">
@@ -50,135 +27,40 @@ const Delivery = ({ }) => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <Stepper page={2} />
-
-            <div className="container w-full p-4 px-4 lg:px-10">
-                <Row className="flex flex-col xl:flex-row">
-
-                    <Col span={24} xl={2}></Col>
-
-                    <Col span={24} xl={12} className="p-4">
+            <div className="w-11/12 lg:w-9/12 mt-10">
+                <div className="flex flex-col xl:flex-row gap-16">
+                    <div className="p-4 w-full lg:w-8/12">
                         <h1 className="font-bold text-4xl mb-4 uppercase">SHIPPING ADDRESS</h1>
 
-                        <Form
-                            name="basic"
-                            onFinish={onFinish}
-                            onFinishFailed={onFinishFailed}
-                            autoComplete="off"
-                            size="large"
-                        >
-                            <div className="flex items-center w-full">
-                                <Form.Item
-                                    className="mr-2 w-full"
-                                    name="firstName"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Please input your FirstName!',
-                                        },
-                                    ]}
-                                >
-                                    <Input type='text' className="w-full border outline-none  p-3" placeholder="Enter FirstName Here..." />
-                                </Form.Item>
-                                <Form.Item
-                                    className="ml-2 w-full"
-                                    name="lastName"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Please input your LastName!',
-                                        },
-                                    ]}
-                                >
-                                    <Input type='text' className="w-full border outline-none  p-3" placeholder="Enter LastName Here..." />
-                                </Form.Item>
+                        <form>
+                            <div className="flex items-center flex-col lg:flex-row w-full gap-3 mb-3">
+                                <input type='text' className="w-full border outline-none  p-3" placeholder="Enter FirstName Here..." />
+                                <input type='text' className="w-full border outline-none  p-3" placeholder="Enter LastName Here..." />
                             </div>
-                            <Form.Item
-                                name="street"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Please input your Street Address!',
-                                    },
-                                ]}
-                            >
-                                <Input type='text' className="w-full border outline-none  p-3" placeholder="Enter Street Address Here..." />
-                            </Form.Item>
-                            <Form.Item
-                                name="landmark"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Please input nearest Landmark!',
-                                    },
-                                ]}
-                            >
-                                <Input type='text' className="w-full border outline-none  p-3" placeholder="Enter Nearest Landmark Here..." />
-                            </Form.Item>
-                            <div className="flex items-center w-full">
-                                <Form.Item
-                                    className="mr-2 w-full"
-                                    name="country"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Please Select your Country!',
-                                        },
-                                    ]}
-                                >
-                                    <CountryDropdown
-                                        defaultOptionLabel="Select a country, man."
-                                        value={country}
-                                        className="w-full border outline-none  p-3"
-                                        onChange={(e) => setCountry(e)} />
-                                </Form.Item>
-                                <Form.Item
-                                    className="ml-2 w-full"
-                                    name="state"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Please Select your State!',
-                                        },
-                                    ]}
-                                >
-                                    <RegionDropdown
-                                        blankOptionLabel="No country selected, man."
-                                        defaultOptionLabel="Now select a region, pal."
-                                        country={country}
-                                        value={region}
-                                        className="w-full border outline-none  p-3"
-                                        onChange={(e) => setRegion(e)} />
-                                </Form.Item>
+                            <div className="flex items-center flex-col lg:flex-row w-full gap-3 mb-3">
+                                <input type='text' className="w-full border outline-none  p-3" placeholder="Enter Street Address Here..." />
+                                <input type='text' className="w-full border outline-none  p-3" placeholder="Enter Nearest Landmark Here..." />
                             </div>
-                            <div className="flex items-center w-full">
-                                <Form.Item
-                                    className="mr-2 w-full"
-                                    name="city"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Please input your City or town!',
-                                        },
-                                    ]}
-                                >
-                                    <Input type='text' className="w-full mr-2 border outline-none  p-3" placeholder="Enter City Here..." />
-                                </Form.Item>
-                                <Form.Item
-                                    className="ml-2 w-full"
-                                    name="pincode"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Please input your pincode!',
-                                        },
-                                    ]}
-                                >
-                                    <Input type='number' className="w-full border outline-none  p-3" placeholder="Enter Pincode Here..." maxLength={6} />
-                                </Form.Item>
+                            <div className="flex items-center flex-col lg:flex-row w-full gap-3 mb-3">
+                                <CountryDropdown
+                                    defaultOptionLabel="Select a country, man."
+                                    value={country}
+                                    className="w-full border outline-none  p-3"
+                                    onChange={(e) => setCountry(e)} />
+                                <RegionDropdown
+                                    blankOptionLabel="No country selected, man."
+                                    defaultOptionLabel="Now select a region, pal."
+                                    country={country}
+                                    value={region}
+                                    className="w-full border outline-none  p-3"
+                                    onChange={(e) => setRegion(e)} />
                             </div>
-                            <button type="submit" className="font-bold cursor-pointer bg-black text-white py-4 px-6 my-4 flex items-center uppercase">Review & Pay &nbsp; <ArrowRightOutlined /></button>
-                        </Form>
+                            <div className="flex items-center flex-col lg:flex-row w-full gap-3 mb-3">
+                                <input type='text' className="w-full border outline-none  p-3" placeholder="Enter City Here..." />
+                                <input type='number' className="w-full border outline-none  p-3" placeholder="Enter Pincode Here..." maxLength={6} />
+                            </div>
+                            <button type="submit" className="font-bold cursor-pointer bg-black text-white py-4 px-6 my-4 flex items-center uppercase">Review & Pay &nbsp; <HiArrowNarrowRight /></button>
+                        </form>
                         <hr />
 
                         <h1 className="font-bold text-2xl uppercase my-4">ARRIVING</h1>
@@ -187,17 +69,15 @@ const Delivery = ({ }) => {
                                 <h1 className="font-bold text-lg uppercase mb-2">Standard Delivery</h1>
                                 <h1 className="font-bold text-lg uppercase mb-2">Free</h1>
                             </div>
-                            <p className="cursor-pointer flex items-center"><CarOutlined /> &nbsp;within 3-9 business days</p>
+                            <p className="cursor-pointer flex items-center"><AiFillCar /> &nbsp;within 3-9 business days</p>
                         </div>
                         <hr />
-                    </Col>
+                    </div>
 
-                    <Col span={24} xl={1}></Col>
-
-                    <Col span={24} xl={7} className="p-4">
+                    <div className="p-4 w-full lg:w-4/12">
 
                         {
-                            isAuth ? "" : <AuthCard />
+                            <AuthCard />
                         }
                         <BillingCard />
 
@@ -213,13 +93,12 @@ const Delivery = ({ }) => {
                         <p className="underline mt-3 cursor-pointer">Ordering & Payment</p>
                         <p className="underline mt-3 cursor-pointer">Promotions & Vouchers</p>
 
-                    </Col>
+                    </div>
 
-                    <Col span={24} xl={2}></Col>
-                </Row>
+                </div>
 
-            </div>
-        </div>
+            </div >
+        </div >
     )
 }
 

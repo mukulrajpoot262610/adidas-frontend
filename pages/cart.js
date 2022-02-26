@@ -60,10 +60,10 @@ const Cart = () => {
                                 </>
                             ) : (
                                 <>
-                                    <BillingCard />
                                     <Link href="/delivery" passHref>
                                         <button className="font-bold cursor-pointer bg-black text-white w-full py-4 px-6 my-4 flex items-center uppercase">CheckOut &nbsp; <HiArrowNarrowRight /></button>
                                     </Link>
+                                    <BillingCard />
                                     <hr />
                                     <input type='text' className="w-full border outline-none my-4 p-3" placeholder="Enter Code Here..." />
                                     <button className="font-bold cursor-pointer bg-black text-white w-full py-4 px-6 mb-4 flex items-center uppercase" onClick={handleCoupanCode}>Apply &nbsp; <HiArrowNarrowRight /></button>
