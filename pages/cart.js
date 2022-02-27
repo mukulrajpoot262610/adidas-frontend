@@ -24,7 +24,7 @@ const Cart = () => {
 
             <div className="lg:w-9/12 w-11/12 p-4 mt-10">
                 <div className="flex flex-col xl:flex-row gap-16">
-                    <div className="p-4 w-8/12">
+                    <div className="p-4 w-full lg:w-8/12">
                         {
                             products.length === 0 ? (
                                 <>
@@ -48,7 +48,7 @@ const Cart = () => {
                         }
                     </div>
 
-                    <div className="p-4 w-4/12">
+                    <div className="p-4 w-full lg:w-4/12">
                         {
                             products.length === 0 ? (
                                 <>

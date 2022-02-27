@@ -50,7 +50,7 @@ const ProductList = ({ products }) => {
 
                     <div className="grid grid-cols-4 mt-2 mb-8 justify-center">
                         {
-                            PRODUCT.map((e) => <ProductCard data={e} key={e._id} />)
+                            PRODUCT.map((e) => <ProductCard data={e} key={e.id} />)
                         }
                     </div>
 

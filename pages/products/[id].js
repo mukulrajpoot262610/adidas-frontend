@@ -16,7 +16,7 @@ const ProductDetail = ({ product }) => {
         if (!shoeSize) return message.error('Please Select a size')
 
         const payload = {
-            id: product._id + Math.floor(Math.random() * 1000),
+            id: product.id + Math.floor(Math.random() * 1000),
             product,
             qty: +qty,
             size: shoeSize,

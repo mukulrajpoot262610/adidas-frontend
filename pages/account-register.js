@@ -1,12 +1,36 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import JoinBanner from '../components/Home/JoinBanner'
 import { BsCheck2, BsGoogle } from 'react-icons/bs'
 import { HiArrowNarrowRight } from 'react-icons/hi'
+import { SendOtp } from '../services/api'
 
 const Register = () => {
+
+    const [email, setEmail] = useState()
+    const [name, setName] = useState()
+    const [genderSelect, setGenderSelect] = useState()
+    const [showOtp, setShowOtp] = useState(false)
+    const [otp, setOtp] = useState()
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+
+        const payload = {
+            name,
+            email,
+            gender: genderSelect
+        }
+
+        try {
+            const { data } = await SendOtp(payload)
+            setShowOtp(true)
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
     return (
         <div className="flex flex-col items-center justify-center">
@@ -30,7 +54,7 @@ const Register = () => {
 
                         <h1 className="font-bold text-xl uppercase my-4">OR</h1>
 
-                        <form>
+                        <form onSubmit={handleSubmit}>
                             <input type='text' className="w-full border outline-none p-3 px-5 mb-3" placeholder="Name" />
 
                             <h1 className="uppercase font-bold text-xl mb-3 mt-5">Gender</h1>
@@ -44,8 +68,11 @@ const Register = () => {
                             </div>
 
                             <input type='email' className="w-full border outline-none p-3 px-5 mt-5" placeholder="Email" />
+                            <label className='text-xs text-gray-400'>This will send you a OTP on your registered mail.</label>
 
-                            <input className="w-full border outline-none p-3 px-5 mt-3" placeholder="Password" />
+                            {
+                                showOtp && <input type='number' className="w-full border outline-none p-3 px-5 mt-3" placeholder="Type OTP Here" required />
+                            }
 
                             <button type="submit" className=" cursor-pointer bg-black text-white py-3 px-6 mb-4 flex items-center uppercase font-bold mt-4">Register &nbsp; <HiArrowNarrowRight /></button>
                         </form>

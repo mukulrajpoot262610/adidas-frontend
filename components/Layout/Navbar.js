@@ -8,9 +8,7 @@ import { useSelector } from 'react-redux'
 const Navbar = () => {
 
     const quantity = useSelector(state => state.cart?.quantity)
-    // const state = useSelector(state => state.rootReducer.user)
-
-    const isAuth = false
+    const {isAuth} = useSelector(state => state.auth)
 
     return (
         <nav className="fixed top-0 z-50 bg-white w-full flex justify-between items-center h-20 px-4 lg:px-10 border-b border-gray-200">
@@ -21,14 +19,16 @@ const Navbar = () => {
             </div>
             <div className="flex items-center">
                 <div className="flex items-center gap-4">
-                    {/* <Link href="/wishlist" passHref>
-                        <HeartOutlined className="text-xl mx-4 cursor-pointer" />
-                    </Link> */}
-                    <Link href="/account-login" passHref>
-                        <FaRegUser className='text-2xl' />
-                    </Link>
+                {
+                        isAuth ? <Link href="/my-account" passHref>
+                            <FaUser className='text-xl cursor-pointer' />
+                        </Link> : <Link href="/account-login" passHref>
+                            <FaRegUser className='text-xl cursor-pointer' />
+                        </Link>
+                }
+
                     <Link href="/cart" passHref>
-                        <div className='relative'>
+                        <div className='relative cursor-pointer'>
                             <span className='-top-2 absolute bg-black text-white -right-2 p-2 text-xs rounded-full h-5 w-5 flex justify-center items-center'>{quantity}</span>
                             <RiShoppingCart2Line className='text-2xl' />
                         </div>

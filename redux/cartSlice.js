@@ -10,18 +10,18 @@ const cartSlice = createSlice({
     reducers: {
         addProductData: (state, { payload }) => {
             state.products = [payload, ...state.products]
-            state.quantity = state.products.map((e) => e.qty).reduce((a, b) => a + b)
+            state.quantity = state.products.map((e) => e.qty).reduce((a, b) => a + b, 0)
             state.total = state.products.map((e) => {
                 return ({ product: e.product.salePrice, qty: e.qty })
-            }).map(e => +e.product * +e.qty).reduce((a, b) => a + b)
+            }).map(e => +e.product * +e.qty).reduce((a, b) => a + b, 0)
         },
         deleteProductData: (state, { payload }) => {
             const updatedProductData = state.products.filter((e) => e.id !== payload);
             state.products = updatedProductData;
-            state.quantity = state.products.map((e) => e.qty).reduce((a, b) => a + b)
+            state.quantity = state.products.map((e) => e.qty).reduce((a, b) => a + b, 0)
             state.total = state.products.map((e) => {
                 return ({ product: e.product.salePrice, qty: e.qty })
-            }).map(e => +e.product * +e.qty).reduce((a, b) => a + b)
+            }).map(e => +e.product * +e.qty).reduce((a, b) => a + b, 0)
         }
     }
 })

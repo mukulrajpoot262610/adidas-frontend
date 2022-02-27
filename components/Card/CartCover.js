@@ -18,9 +18,10 @@ const CartCover = ({ data }) => {
 
     }
 
-    const handleRemove = (id, name) => {
+    console.log(data)
+
+    const handleRemove = (id) => {
         dispatch(deleteProductData(id))
-        message.success(`${name} removed Successfully`)
     }
 
     return (

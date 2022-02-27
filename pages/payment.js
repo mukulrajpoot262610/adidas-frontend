@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
-import { ArrowRightOutlined } from '@ant-design/icons'
-import { Col, Row, Form, Input, Collapse } from 'antd'
+import { HiArrowNarrowRight } from 'react-icons/hi'
 import { useSelector, useDispatch } from 'react-redux'
 import CartCover from '../components/Card/CartCover'
 import OrderCover from '../components/Card/OrderCover'
-import Stepper from '../components/Steps/Stepper'
 import Link from 'next/link'
-import { placeOrder } from '../services/lib/orderHandler'
 import { useRouter } from 'next/router'
-import { addOrderData } from '../redux/orderReducer'
+// import { addOrderData } from '../redux/orderReducer'
 import BillingCard from '../components/Card/BillingCard'
 
 const Payment = () => {
@@ -69,13 +66,10 @@ const Payment = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-
-            <Stepper page={3} />
-
             <div className="container w-full p-4 px-4 lg:px-10 mt-10">
-                <Row className="flex flex-col xl:flex-row">
+                <div className="flex flex-col xl:flex-row">
 
-                    <Col span={24} xl={14} className="p-4">
+                    <div className="p-4 w-full lg:w-8/12">
                         <h1 className="font-bold text-4xl uppercase">PAYMENT METHOD</h1>
                         <p className="mb-8">All transactions are safe and secure</p>
                         <Collapse accordion defaultActiveKey={['1']} className="text-base font-bold uppercase" onChange={handlePaymentMethodSelect}>
@@ -156,18 +150,16 @@ const Payment = () => {
                         </h1>
 
                         {
-                            paymentMethod === 1 ? <button type="submit" form='card' className="cursor-pointer bg-black text-white py-4 px-6 my-4 flex items-center uppercase font-bold">Place Order &nbsp; <ArrowRightOutlined /></button> : (
-                                <button className="cursor-pointer bg-black text-white py-4 px-6 my-4 flex items-center uppercase font-bold" onClick={handlePlaceOrder}>Place Order &nbsp; <ArrowRightOutlined /></button>
+                            paymentMethod === 1 ? <button type="submit" form='card' className="cursor-pointer bg-black text-white py-4 px-6 my-4 flex items-center uppercase font-bold">Place Order &nbsp; <HiArrowNarrowRight /></button> : (
+                                <button className="cursor-pointer bg-black text-white py-4 px-6 my-4 flex items-center uppercase font-bold" onClick={handlePlaceOrder}>Place Order &nbsp; <HiArrowNarrowRight /></button>
                             )
                         }
 
 
                         <hr />
-                    </Col>
+                    </div>
 
-                    <Col span={24} xl={2}></Col>
-
-                    <Col span={24} xl={7} className="p-4">
+                    <div className="p-4 w-full lg:w-4/12">
 
                         <BillingCard />
 
@@ -183,8 +175,8 @@ const Payment = () => {
                         <p className="underline mt-3 cursor-pointer">Ordering & Payment</p>
                         <p className="underline mt-3 cursor-pointer">Promotions & Vouchers</p>
 
-                    </Col>
-                </Row>
+                    </div>
+                </div>
 
             </div>
         </div>

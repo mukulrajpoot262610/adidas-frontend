@@ -2,10 +2,15 @@ import React from 'react'
 import Footer from './Footer'
 import Navbar from './Navbar'
 import Head from 'next/head'
+import Loader from '../Loader'
+import { useLoadingWithRefresh } from '../../hooks/useLoadingWithRefresh'
 
 const Layout = ({ children }) => {
 
+    const { loading } = useLoadingWithRefresh()
+
     return (
+        loading ? <Loader /> :
         <>
             <Head>
                 <title>Adidas</title>
