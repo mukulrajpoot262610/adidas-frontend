@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Link from 'next/link';
+import commaNumber from 'comma-number';
 
 const ProductCard = ({ data }) => {
 
@@ -17,8 +18,8 @@ const ProductCard = ({ data }) => {
                         }
                     </div> */}
                     <div className="bg-white flex absolute bottom-0 p-1 text-sm">
-                        <h1 className="line-through">₹{price}</h1>
-                        <h1 className="ml-1 text-red-500">₹{salePrice}</h1>
+                        <h1 className="line-through">₹{commaNumber(price)}</h1>
+                        <h1 className="ml-1 text-red-500">₹{commaNumber(salePrice)}</h1>
                     </div>
                 </div>
                 <div className="p-4">

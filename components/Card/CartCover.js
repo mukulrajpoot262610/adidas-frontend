@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux'
 import { deleteProductData } from '../../redux/cartSlice'
 import { GrClose } from 'react-icons/gr'
 import { FaHeart, FaRegHeart } from 'react-icons/fa'
+import commaNumber from 'comma-number'
 
 const CartCover = ({ data }) => {
 
@@ -36,9 +37,9 @@ const CartCover = ({ data }) => {
                         <h1 className="font-medium text-base uppercase">{product.category}</h1>
                         <div className="flex items-center">
                             {
-                                product.salePrice === product.price ? "" : <h1 className="font-light line-through text-sm">₹{product.price * qty}</h1>
+                                product.salePrice === product.price ? "" : <h1 className="font-light line-through text-sm">₹{commaNumber(product.price * qty)}</h1>
                             }
-                            <h1 className="my-1 ml-3 font-medium text-base text-red-700">₹{product.salePrice * qty}</h1>
+                            <h1 className="my-1 ml-3 font-medium text-base text-red-700">₹{commaNumber(product.salePrice * qty)}</h1>
                         </div>
                     </div>
                     <h1 className="font-semibold my-2 text-xl uppercase">{product.name}</h1>

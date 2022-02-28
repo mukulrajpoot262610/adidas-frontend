@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
-import { CarOutlined } from '@ant-design/icons'
-import { Col, Row } from 'antd'
+import { AiFillCar } from 'react-icons/ai'
 import { useSelector, useDispatch } from 'react-redux'
 import OrderCover from '../components/Card/OrderCover'
-import Stepper from '../components/Steps/Stepper'
 
 const OrderComplete = () => {
 
@@ -36,13 +34,10 @@ const OrderComplete = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <Stepper page={4} />
-
             <div className="container w-full p-4 px-4 lg:px-10 mt-10">
-                <Row className="flex flex-col xl:flex-row">
-                    <Col span={24} xl={2}></Col>
+                <div className="flex flex-col xl:flex-row">
 
-                    <Col span={24} xl={12} className="p-4">
+                    <div className="p-4 w-full lg:w-8/12">
                         {
                             order &&
                             <>
@@ -55,7 +50,7 @@ const OrderComplete = () => {
                                         <h1 className="font-bold text-xl uppercase mb-2">Standard Delivery</h1>
                                         <h1 className="font-bold text-xl uppercase mb-2">Free</h1>
                                     </div>
-                                    <p className="cursor-pointer flex items-center"><CarOutlined /> &nbsp;within 3-9 business days</p>
+                                    <p className="cursor-pointer flex items-center"><AiFillCar /> &nbsp;within 3-9 business days</p>
                                 </div>
                                 <p className="my-4">Track and trace details will be sent to your email upon shipment.</p>
                                 <hr />
@@ -81,11 +76,9 @@ const OrderComplete = () => {
                                 <hr />
                             </>
                         }
-                    </Col>
+                    </div>
 
-                    <Col span={24} xl={1}></Col>
-
-                    <Col span={24} xl={7} className="p-4">
+                    <div className="p-4 w-full lg:w-4/12">
 
                         <div className="border-2 border-black p-4">
                             <h1 className="font-bold text-xl uppercase mb-4">Order summary</h1>
@@ -123,10 +116,9 @@ const OrderComplete = () => {
                         <p className="underline mt-3 cursor-pointer">Ordering & Payment</p>
                         <p className="underline mt-3 cursor-pointer">Promotions & Vouchers</p>
 
-                    </Col>
+                    </div>
 
-                    <Col span={24} xl={2}></Col>
-                </Row>
+                </div>
 
             </div>
         </div>

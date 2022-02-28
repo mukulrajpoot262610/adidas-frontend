@@ -1,17 +1,15 @@
 import React, { useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
-import { Col, Row, Alert, Modal, Button, Form, Input } from 'antd'
+import { AiOutlinePlus, AiFillDelete } from 'react-icons/ai'
+import { FaEdit } from 'react-icons/fa'
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
-import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
-import AddressModal from '../../components/Modal/AddressModal';
 import { useSelector } from 'react-redux';
 
 const Account = () => {
 
     const [isModalVisible, setIsModalVisible] = useState(false);
-
-    // const { user } = useSelector(state => state.user.currentUser)
+    const { user } = useSelector(state => state.auth)
 
     const showModal = () => {
         setIsModalVisible(true);
@@ -28,21 +26,20 @@ const Account = () => {
                 <hr />
             </div>
 
-            <div className="container w-full p-4 px-4 lg:px-10 mt-10">
-                <Row className="flex flex-col xl:flex-row">
-                    <Col span={24} xl={2}></Col>
-                    <Col span={24} xl={15} className="p-6">
+            <div className="lg:w-9/12 w-full mt-10">
+                <div className="flex flex-col xl:flex-row gap-16">
+                    <div xl={15} className="p-6 w-full lg:w-8/12">
                         <h1 className="font-bold text-4xl uppercase">ADDRESS BOOK</h1>
                         <p className="my-3 mb-8">You have <span className="font-bold"> address slots</span> remaining.</p>
 
-                        <div className="flex flex-wrap">
-                            <div className="relative m-2 w-96 border border-gray-300 h-56 p-6 flex justify-between flex-col items-start hover:border-black cursor-pointer" onClick={showModal}>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                            <div className="relative border border-gray-300 h-56 p-6 flex justify-between flex-col items-start hover:border-black cursor-pointer">
                                 <h1>New Address</h1>
-                                <PlusOutlined className="text-2xl" />
+                                <AiOutlinePlus className="text-2xl" />
                             </div>
 
                             {
-                                user && user.address.map((e, i) => <div key={i} className="relative w-96 border m-2 border-gray-300 h-56 p-6 flex justify-between flex-col items-start hover:border-black cursor-pointer" >
+                                user?.address?.map((e, i) => <div key={i} className="relative border border-gray-300 h-56 p-6 flex justify-between flex-col items-start hover:border-black cursor-pointer" >
                                     <div>
                                         <h1><span className='font-bold uppercase'>Landmark: </span>{e.landmark}</h1>
                                         <h1><span className='font-bold uppercase'>Street: </span>{e.street}</h1>
@@ -51,19 +48,20 @@ const Account = () => {
                                         <h1><span className='font-bold uppercase'>Country: </span>{e.country}</h1>
                                         <h1><span className='font-bold uppercase'>Pincode: </span>{e.pincode}</h1>
                                     </div>
-                                    <div className='flex justify-end w-full'>
-                                        <EditOutlined className="text-2xl mx-2" />
-                                        <DeleteOutlined className="text-2xl" />
+                                    <div className='flex justify-between items-end w-full'>
+                                        <h1 className='text-xs underline'>Default</h1>
+                                        <div className='flex'>
+                                            <FaEdit className="text-2xl mx-2" />
+                                            <AiFillDelete className="text-2xl" />
+                                        </div>
                                     </div>
                                 </div>)
                             }
                         </div>
 
-                        <AddressModal setIsModalVisible={setIsModalVisible} isModalVisible={isModalVisible} />
+                    </div>
 
-                    </Col>
-
-                    <Col span={24} xl={5} className="p-6">
+                    <div className="p-6 w-full lg:w-4/12">
                         <Link passHref href="/my-account">
                             <p className="mt-3 underline cursor-pointer">My Account</p>
                         </Link>
@@ -87,9 +85,8 @@ const Account = () => {
                         <p className="underline mt-3 cursor-pointer">Ordering & Payment</p>
                         <p className="underline mt-3 cursor-pointer">Promotions & Vouchers</p>
                         <p className="underline mt-3 cursor-pointer">Company Information</p>
-                    </Col>
-                    <Col span={24} xl={2}></Col>
-                </Row>
+                    </div>
+                </div>
 
             </div>
         </div>

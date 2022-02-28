@@ -13,25 +13,12 @@ const Payment = () => {
 
     const router = useRouter();
     const dispatch = useDispatch()
-    const { Panel } = Collapse;
 
     const cart = useSelector(state => state.cart)
-    const { user } = useSelector(state => state.user.currentUser)
+    const { user } = useSelector(state => state.auth)
     const { products, quantity, total } = cart;
 
     const [paymentMethod, setPaymentMethod] = useState(1);
-
-    const onFinish = (values) => {
-        console.log('Success:', values);
-    };
-
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-    };
-
-    const handlePaymentMethodSelect = (values) => {
-        setPaymentMethod(+values)
-    }
 
     const handlePlaceOrder = async () => {
 
@@ -66,75 +53,29 @@ const Payment = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <div className="container w-full p-4 px-4 lg:px-10 mt-10">
-                <div className="flex flex-col xl:flex-row">
+            <div className="lg:w-9/12 w-full mt-10">
+                <div className="flex flex-col xl:flex-row gap-16">
 
                     <div className="p-4 w-full lg:w-8/12">
                         <h1 className="font-bold text-4xl uppercase">PAYMENT METHOD</h1>
                         <p className="mb-8">All transactions are safe and secure</p>
-                        <Collapse accordion defaultActiveKey={['1']} className="text-base font-bold uppercase" onChange={handlePaymentMethodSelect}>
-                            <Panel header="Credit/Debit Card" key="1">
+                        <div className="text-base font-bold uppercase">
+                            {/*
+                            <div header="Credit/Debit Card" key="1">
                                 <p className="mb-4 font-normal capitalize text-sm">You may be directed to your bank 3D secure process to authenticate your information.</p>
-                                <Form
-                                    id='card'
-                                    name="basic"
-                                    onFinish={onFinish}
-                                    onFinishFailed={onFinishFailed}
-                                    autoComplete="off"
-                                    size="large"
-                                >
-
-                                    <Form.Item
-                                        name="cardNumber"
-                                        rules={[
-                                            {
-                                                required: true,
-                                                message: 'Please input your Card!',
-                                            },
-                                        ]}
-                                    >
-                                        <Input type='text' className="w-full border outline-none p-2" placeholder="Enter Card Number Here..." />
-                                    </Form.Item>
-                                    <Form.Item
-                                        name="nameOnCard"
-                                        rules={[
-                                            {
-                                                required: true,
-                                                message: 'Please input Name!',
-                                            },
-                                        ]}
-                                    >
-                                        <Input type='text' className="w-full border outline-none p-2" placeholder="Enter Name On Card Here..." />
-                                    </Form.Item>
+                                <form>
+                                    <input type='text' className="w-full border outline-none p-2" placeholder="Enter Card Number Here..." />
+                                    <input type='text' className="w-full border outline-none p-2" placeholder="Enter Name On Card Here..." />
                                     <div className="flex items-center w-full">
-                                        <Form.Item
-                                            className="mr-2 w-full"
-                                            name="date"
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: 'Please input Expiry Date!',
-                                                },
-                                            ]}
-                                        >
-                                            <Input type='text' className="w-full border outline-none p-2" placeholder="Enter Expiry Date Here..." />
-                                        </Form.Item>
-                                        <Form.Item
-                                            name="cvv"
-                                            className="ml-2 w-full"
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: 'Please input CVV!',
-                                                },
-                                            ]}
-                                        >
-                                            <Input type='text' className="w-full border outline-none p-2" placeholder="Enter CVV Here..." />
-                                        </Form.Item>
+
+                                        <input type='text' className="w-full border outline-none p-2" placeholder="Enter Expiry Date Here..." />
+
+                                        <input type='text' className="w-full border outline-none p-2" placeholder="Enter CVV Here..." />
                                     </div>
-                                </Form>
-                            </Panel>
-                            <Panel header="Cash on Delivery" key="2">
+                                </form>
+                            </div>
+                             */}
+                            <div header="Cash on Delivery" key="2">
                                 <div className="flex justify-between items-center border p-4">
                                     <h1 className="font-bold text-base uppercase">Cash On Delivery</h1>
                                     <img src="https://www.adidas.co.in/static/checkout/react/b5f86aa/assets/img/icon-adidas-cash-on-delivery.svg" alt="" />
@@ -142,8 +83,8 @@ const Payment = () => {
                                 <p className="my-4 font-normal text-sm">No online payment needed – pay in cash using the exact change once your items are delivered!
 
                                     Your bank account details will only be required if you wish to return anything for a refund.</p>
-                            </Panel>
-                        </Collapse>
+                            </div>
+                        </div>
                         <h1 className='flex items-center mt-2'>
                             <span className='font-bold'>Selected Payment Method: &nbsp;</span>
                             {paymentMethod === 1 ? "Card" : "Cash On Delivery"}

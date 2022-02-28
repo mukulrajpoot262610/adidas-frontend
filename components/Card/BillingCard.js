@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import commaNumber from 'comma-number';
 
 const BillingCard = () => {
 
@@ -25,15 +26,15 @@ const BillingCard = () => {
             <h1 className="font-bold text-xl uppercase mb-4">Order summary</h1>
             <div className="w-full flex justify-between items-center my-2">
                 <h1>Original Price: </h1>
-                <h1>₹{originalPrice}</h1>
+                <h1>₹{commaNumber(originalPrice)}</h1>
             </div>
             <div className="w-full flex justify-between items-center my-2">
                 <h1>Discount (On Sale): </h1>
-                <h1>-₹{originalPrice - discount}</h1>
+                <h1>-₹{commaNumber(originalPrice - discount)}</h1>
             </div>
             <div className="w-full flex justify-between items-center my-2">
                 <h1>Net Price: </h1>
-                <h1>₹{discount}</h1>
+                <h1>₹{commaNumber(discount)}</h1>
             </div>
             <div className="w-full flex justify-between items-center my-2">
                 <h1>Delivery: </h1>
@@ -41,7 +42,7 @@ const BillingCard = () => {
             </div>
             <div className="w-full flex justify-between items-center my-2">
                 <h1 className="font-black text-lg">TOTAL: </h1>
-                <h1 className="font-black text-lg">₹{total}</h1>
+                <h1 className="font-black text-lg">₹{commaNumber(total)}</h1>
             </div>
         </div>
     </>;

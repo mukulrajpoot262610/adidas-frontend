@@ -1,3 +1,4 @@
+import commaNumber from 'comma-number'
 import Image from 'next/image'
 import React from 'react'
 
@@ -7,14 +8,12 @@ const OrderCover = ({ data }) => {
 
     return (
         <div className="border border-black mb-2">
-            <div>
-                <div>
-                    <div className='relative h-32 w-full'>
-                        <img src={product.image} layout='fill' alt='' className='object-cover' />
-                    </div>
+            <div className='flex'>
+                <div className='relative h-32 w-2/6'>
+                    <img src={product.image} alt='' className='object-cover h-32' />
                 </div>
 
-                <div className="p-2">
+                <div className="p-4 w-4/6">
                     <h1 className='text-xs uppercase'>{product.category}</h1>
                     <h1 className="font-bold text-sm">{product.name}</h1>
                     <div className="flex items-center text-xs">
@@ -23,9 +22,9 @@ const OrderCover = ({ data }) => {
                     </div>
                     <div className="flex items-center">
                         {
-                            product.salePrice === product.price ? "" : <h1 className="my-1 mr-2 font-light line-through">₹{product.price}</h1>
+                            product.salePrice === product.price ? "" : <h1 className="my-1 mr-2 font-light line-through">₹{commaNumber(product.price)}</h1>
                         }
-                        <h1 className="my-1 font-bold">₹{product.salePrice}</h1>
+                        <h1 className="my-1 font-bold">₹{commaNumber(product.salePrice)}</h1>
                     </div>
                 </div>
             </div>
