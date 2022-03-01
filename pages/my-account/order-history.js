@@ -7,24 +7,7 @@ import { HiArrowNarrowRight } from 'react-icons/hi'
 
 const Account = () => {
 
-    const [orders, setOrders] = useState()
     const { user } = useSelector(state => state.auth)
-
-    useEffect(() => {
-
-        const fetchData = async () => {
-            try {
-                const res = await getAllOrders(user._id);
-                if (res.data.success) {
-                    setOrders(res.data.orders)
-                }
-            } catch (err) {
-                console.log(err.response)
-            }
-        }
-        fetchData()
-
-    }, [user])
 
     return (
         <div className="flex flex-col items-center justify-center">
@@ -40,15 +23,17 @@ const Account = () => {
             <div className="lg:w-9/12 w-full">
                 <div className="flex flex-col lg:flex-row gap-16">
                     <div className="p-6 lg:w-8/12 w-full">
-                        <h1 className="font-bold text-4xl uppercase">Order History</h1>
+                        <h1 className="font-bold text-4xl uppercase tracking-tighter">Order History</h1>
 
                         <div className='my-8'>
                             {
-                                user.orders > 0 ? user.orders.map((e) => <OrderHistoryCover key={e._id} data={e} />) : <><h1 className='font-bold uppercase'>No ORders found...</h1></>
+                                user.orders.length > 0 ? user.orders.map((e) => <OrderHistoryCover key={e._id} data={e} />) : <>
+                                    <h1 className='font-bold uppercase'>No ORders found...</h1>
+                                </>
                             }
                         </div>
                         <Link href="/products/explore" passHref>
-                            <button className="cursor-pointer bg-black text-white py-3 px-6 my-4 flex items-center uppercase font-bold">Shop Now &nbsp; <HiArrowNarrowRight /></button>
+                            <button className="cursor-pointer bg-black text-white py-3 px-6 my-4 flex items-center uppercase font-bold">Shop More &nbsp; <HiArrowNarrowRight /></button>
                         </Link>
 
 
