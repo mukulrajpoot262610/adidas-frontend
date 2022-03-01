@@ -5,26 +5,14 @@ import { useSelector, useDispatch } from 'react-redux'
 import OrderCover from '../components/Card/OrderCover'
 import { HiArrowNarrowRight } from 'react-icons/hi'
 import Link from 'next/link'
+import BillingCard from '../components/Card/BillingCard'
 
 const OrderComplete = () => {
 
-    const { products, total } = useSelector(state => state.cart)
+    const { products } = useSelector(state => state.cart)
     const { user } = useSelector(state => state.auth)
     const { order } = useSelector(state => state.order)
 
-    const [originalPrice, setOriginalPrice] = useState()
-    const [discount, setDiscount] = useState()
-
-    useEffect(() => {
-        products.length && setOriginalPrice(products.map((e) => {
-            return ({ price: e.product.price, qty: e.qty })
-        }).map(e => +e.price * +e.qty).reduce((a, b) => a + b))
-
-        products.length && setDiscount(products.map((e) => {
-            return ({ price: e.product.salePrice, qty: e.qty })
-        }).map(e => +e.price * +e.qty).reduce((a, b) => a + b))
-
-    }, [products])
 
     return (
         <div className="flex flex-col items-center justify-center">
@@ -81,29 +69,7 @@ const OrderComplete = () => {
 
                     <div className="p-4 w-full lg:w-4/12">
 
-                        <div className="border-2 border-black p-4">
-                            <h1 className="font-bold text-xl uppercase mb-4">Order summary</h1>
-                            <div className="w-full flex justify-between items-center my-2">
-                                <h1>Original Price: </h1>
-                                <h1>₹{originalPrice}</h1>
-                            </div>
-                            <div className="w-full flex justify-between items-center my-2">
-                                <h1>Discount (On Sale): </h1>
-                                <h1>-₹{originalPrice - discount}</h1>
-                            </div>
-                            <div className="w-full flex justify-between items-center my-2">
-                                <h1>Net Price: </h1>
-                                <h1>₹{discount}</h1>
-                            </div>
-                            <div className="w-full flex justify-between items-center my-2">
-                                <h1>Delivery: </h1>
-                                <h1>FREE</h1>
-                            </div>
-                            <div className="w-full flex justify-between items-center my-2">
-                                <h1 className="font-bold text-xl">TOTAL: </h1>
-                                <h1 className="font-bold text-xl">₹{total}</h1>
-                            </div>
-                        </div>
+                        <BillingCard />
 
                         <h1 className="font-bold text-xl uppercase mb-2 mt-4">Order details</h1>
                         <div>
@@ -118,7 +84,6 @@ const OrderComplete = () => {
                         <p className="underline mt-3 cursor-pointer">Promotions & Vouchers</p>
 
                     </div>
-
                 </div>
 
             </div>

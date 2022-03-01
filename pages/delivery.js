@@ -14,6 +14,7 @@ import { AddAddress, DeleteAddress, UpdateDetails } from '../services/api'
 import { setAuth } from '../redux/authSlice';
 import AddressModal from '../components/Modal/AddressModal'
 import { setShippingAddress } from '../redux/orderSlice'
+import toast from 'react-hot-toast'
 
 const Delivery = ({ }) => {
 
@@ -32,11 +33,11 @@ const Delivery = ({ }) => {
         e.preventDefault()
 
         if (!user.address.length) {
-            return alert('Please add a address')
+            return toast.error('Please add a address')
         }
 
         if (!user.name) {
-            return alert('Please add your name')
+            return toast.error('Please add your name')
         }
 
         dispatch(setShippingAddress(selected))
@@ -49,6 +50,7 @@ const Delivery = ({ }) => {
         try {
             const { data } = await UpdateDetails({ name, gender: genderSelect })
             dispatch(setAuth(data))
+            toast.success('Added Successfully')
         } catch (err) {
             console.log(err)
         }
@@ -58,6 +60,7 @@ const Delivery = ({ }) => {
         try {
             const { data } = await DeleteAddress(e)
             dispatch(setAuth(data))
+            toast.success('Deleted Successfully')
         } catch (err) {
             console.log(err)
         }

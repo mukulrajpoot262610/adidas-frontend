@@ -4,10 +4,11 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { HiArrowNarrowRight } from 'react-icons/hi'
 import { useSelector } from 'react-redux'
+import UserDetailsModal from '../../components/Modal/UserDetailsModal'
 
 const Personal = () => {
 
-    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [showModal, setShowModal] = useState(false);
     const router = useRouter()
     const { user } = useSelector(state => state.auth)
 
@@ -16,7 +17,7 @@ const Personal = () => {
     }
 
     const handleEditDetails = () => {
-        setIsModalVisible(true)
+        setShowModal(true)
     }
 
     return (
@@ -30,6 +31,10 @@ const Personal = () => {
                 <hr />
             </div>
 
+            {
+                showModal && <UserDetailsModal setShowModal={setShowModal} />
+            }
+
             <div className="lg:w-9/12 w-full mt-10">
                 <div className="flex flex-col xl:flex-row gap-16">
                     <div className="p-4 w-full lg:w-8/12">
@@ -37,9 +42,9 @@ const Personal = () => {
                         <p className="mb-4">Feel free to edit any of your details below so your account is up to date.</p>
 
                         <h1 className="font-bold text-2xl mt-8 uppercase">Personal DEtails</h1>
-                        <h1 className="font-bold text-lg mt-4 uppercase">Name</h1>
+                        <h1 className="font-bold text-lg mt-4 uppercase">Name & gender</h1>
                         <p className="my-1 uppercase">{user?.name}</p>
-                        {/* <p className="my-1 uppercase">{user.gender}</p> */}
+                        <p className="my-1 uppercase">{user.gender}</p>
                         <p className="underline mt-3 mb-8 cursor-pointer" onClick={handleEditDetails}>Edit</p>
 
                         <h1 className="font-bold text-2xl mt-4 uppercase">Login DEtails</h1>

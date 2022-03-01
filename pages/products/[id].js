@@ -2,10 +2,10 @@ import Head from 'next/head'
 import React, { useState } from 'react'
 import { HiArrowNarrowRight } from 'react-icons/hi'
 import { useDispatch } from 'react-redux'
-import PRODUCT from '../../components/List/Product.list'
 import { addProductData } from '../../redux/cartSlice'
 import { getProduct } from '../../services/api'
 import commaNumber from 'comma-number'
+import toast from 'react-hot-toast'
 
 const ProductDetail = ({ product }) => {
 
@@ -15,7 +15,7 @@ const ProductDetail = ({ product }) => {
 
     const handleAddToCart = () => {
 
-        if (!shoeSize) return message.error('Please Select a size')
+        if (!shoeSize) return toast.error('Please Select a size')
 
         const payload = {
             id: product._id + Math.floor(Math.random() * 1000),
@@ -24,6 +24,7 @@ const ProductDetail = ({ product }) => {
             size: shoeSize,
         }
         dispatch(addProductData(payload))
+        toast.success('Added to cart successfully')
     }
 
     return (

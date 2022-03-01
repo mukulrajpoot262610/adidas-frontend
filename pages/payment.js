@@ -8,6 +8,7 @@ import BillingCard from '../components/Card/BillingCard'
 import { placeOrder } from '../services/api'
 import { setOrder } from '../redux/orderSlice'
 import { setAuth } from '../redux/authSlice'
+import toast from 'react-hot-toast'
 
 const Payment = () => {
 
@@ -35,7 +36,9 @@ const Payment = () => {
             dispatch(setOrder(res.data.order))
             dispatch(setAuth(res.data))
             router.push('/ordercomplete')
+            toast.success('Order Placed Successfully')
         } catch (err) {
+            toast.error(err?.response?.data?.msg)
             console.log(err.response)
         }
     }

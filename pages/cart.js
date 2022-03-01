@@ -5,7 +5,7 @@ import { HiArrowNarrowRight } from 'react-icons/hi'
 import { useSelector } from 'react-redux'
 import CartCover from '../components/Card/CartCover'
 import BillingCard from '../components/Card/BillingCard'
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 const Cart = () => {
 

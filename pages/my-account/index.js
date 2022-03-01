@@ -34,6 +34,7 @@ const Account = () => {
         try {
             const { data } = await UpdateDetails({ name, gender: genderSelect })
             dispatch(setAuth(data))
+            toast.success('Added Successfully')
         } catch (err) {
             console.log(err)
         }

@@ -8,7 +8,7 @@ import { SendOtp, VerifyOtp } from '../services/api'
 import { useDispatch } from 'react-redux'
 import { setAuth } from '../redux/authSlice'
 import Image from 'next/image'
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 const Login = () => {
 

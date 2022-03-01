@@ -5,6 +5,7 @@ import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import { useDispatch } from 'react-redux'
 import { AddAddress } from '../../services/api';
 import { setAuth } from '../../redux/authSlice';
+import toast from 'react-hot-toast';
 
 
 const AddressModal = ({ setShowModal }) => {
@@ -27,7 +28,9 @@ const AddressModal = ({ setShowModal }) => {
             const { data } = await AddAddress(payload)
             dispatch(setAuth(data))
             setShowModal(false)
+            toast.success('Added Successfully')
         } catch (err) {
+            toast.error(err.response.data.msg)
             console.log(err)
         }
     }

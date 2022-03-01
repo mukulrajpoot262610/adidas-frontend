@@ -2,13 +2,12 @@ import React, { useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { AiOutlinePlus, AiFillDelete } from 'react-icons/ai'
-import { FaEdit } from 'react-icons/fa'
-import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import { useSelector } from 'react-redux';
 import AddressModal from '../../components/Modal/AddressModal'
 import { setAuth } from '../../redux/authSlice'
 import { DeleteAddress } from '../../services/api'
 import { useDispatch } from 'react-redux'
+import toast from 'react-hot-toast';
 
 const Account = () => {
 
@@ -22,6 +21,7 @@ const Account = () => {
         try {
             const { data } = await DeleteAddress(e)
             dispatch(setAuth(data))
+            toast.success("Deleted Successfully")
         } catch (err) {
             console.log(err)
         }
