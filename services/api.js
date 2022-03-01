@@ -12,8 +12,14 @@ const api = axios.create({
 
 // LIST
 export const getAllProducts = () => api.get('/api/products')
+export const getProduct = (id) => api.get(`/api/product/${id}`)
+
+export const placeOrder = (data) => api.post('/api/place-order', data)
+
 export const SendOtp = (data) => api.post('/api/send-otp', data)
 export const VerifyOtp = (data) => api.post('/api/verify-otp', data)
+export const logout = () => api.post('/api/logout')
+
 export const UpdateDetails = (data) => api.post('/api/update-personal', data)
 export const AddAddress = (data) => api.post('/api/address', data)
 export const DeleteAddress = (data) => api.delete(`/api/address/${data}`)

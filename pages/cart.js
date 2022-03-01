@@ -22,7 +22,7 @@ const Cart = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <div className="lg:w-9/12 w-11/12 p-4 mt-10">
+            <div className="lg:w-9/12 w-full mt-10">
                 <div className="flex flex-col xl:flex-row gap-16">
                     <div className="p-4 w-full lg:w-8/12">
                         {

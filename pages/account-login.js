@@ -18,6 +18,9 @@ const Login = () => {
     const [otp, setOtp] = useState()
     const [response, setResponse] = useState()
 
+    const redirect = router.query.redirect
+    console.log(redirect)
+
     const handleSubmit = async (e) => {
         e.preventDefault()
 
@@ -31,9 +34,9 @@ const Login = () => {
             }
         } else {
             try {
-                const { data } = await VerifyOtp({...response, otp})
+                const { data } = await VerifyOtp({ ...response, otp })
                 dispatch(setAuth(data))
-                router.replace('/')
+                redirect ? router.replace(`/${redirect}`) : router.replace('/')
             } catch (err) {
                 console.log(err)
             }

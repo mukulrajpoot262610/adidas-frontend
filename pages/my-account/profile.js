@@ -64,9 +64,6 @@ const Personal = () => {
                         <Link href="/my-account/order-history">
                             <p className="underline mt-3 cursor-pointer">Order History</p>
                         </Link>
-                        <Link href="/wishlist">
-                            <p className="underline mt-3 cursor-pointer">Wish List</p>
-                        </Link>
                         <hr className="my-4" />
                         <h1 className="font-bold text-xl mt-4 uppercase">Need Help?</h1>
                         <p className="underline mt-3 cursor-pointer">Products</p>

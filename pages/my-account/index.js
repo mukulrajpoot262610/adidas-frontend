@@ -4,9 +4,9 @@ import Link from 'next/link'
 import { useSelector } from 'react-redux'
 import { HiArrowNarrowRight } from 'react-icons/hi'
 import { useDispatch } from 'react-redux'
-import { logout, setAuth } from '../../redux/authSlice'
+import { setAuth } from '../../redux/authSlice'
 import { useRouter } from 'next/router'
-import { UpdateDetails } from '../../services/api'
+import { logout, UpdateDetails } from '../../services/api'
 
 const Account = () => {
 
@@ -17,11 +17,14 @@ const Account = () => {
     const [genderSelect, setGenderSelect] = useState()
     const { user } = useSelector(state => state.auth)
 
-    const handleLogout = () => {
-        dispatch(logout())
-        router.push('/')
-        message.success('Logged Out Succesfully 🎉')
-        Cookies.remove('userToken')
+    const handleLogout = async () => {
+        try {
+            const { data } = await logout()
+            setAuth(data)
+            router.replace('/')
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     const handleSubmit = async (e) => {
@@ -49,18 +52,18 @@ const Account = () => {
             {
                 data ? (
                     <div className="lg:w-9/12 w-full mt-10">
-                        <div className="flex flex-col xl:flex-row gap-8">
+                        <div className="flex flex-col lg:flex-row gap-8">
                             <div xl={15} className="p-6 w-full lg:w-8/12">
                                 <div className="flex flex-col lg:flex-row justify-between items-center">
                                     <h1 className="font-bold text-4xl uppercase">Hi {user?.name}</h1>
                                     <div className="">
-                                        <h1 className="font-normal text-lg text-right" >Not {user?.name}? <span className="uppercase font-bold underline cursor-pointer" onClick={() => signOut({ callbackUrl: '/' })}>Logout</span> </h1>
+                                        <h1 className="font-normal text-lg text-right" >Not {user?.name}? <span className="uppercase font-bold underline cursor-pointer" onClick={handleLogout}>Logout</span> </h1>
                                         <p className="text-sm text-right">THIS WILL LOG YOU OUT FROM YOUR CURRENT DEVICE</p>
                                     </div>
                                 </div>
                                 <hr />
                                 {
-                                    user.name ? "" : <div className="flex justify-between items-center mt-6 border p-6">
+                                    user?.name ? "" : <div className="flex justify-between items-center mt-6 border p-6">
                                         <form onSubmit={handleSubmit} className="w-full">
                                             <h1 className="uppercase font-bold text-xl mb-3 mt-5">Enter your name</h1>
                                             <input type='text' className="w-full border outline-none p-3 px-5" onChange={(e) => setName(e.target.value)} placeholder="Name" />
@@ -107,9 +110,6 @@ const Account = () => {
                                 </Link>
                                 <Link href="/my-account/order-history">
                                     <p className="underline mt-3 cursor-pointer">Order History</p>
-                                </Link>
-                                <Link href="/wishlist">
-                                    <p className="underline mt-3 cursor-pointer">Wish List</p>
                                 </Link>
                                 <hr className="my-6 border-black" />
                                 <h1 className="font-bold text-xl mt-4 uppercase">Need Help?</h1>

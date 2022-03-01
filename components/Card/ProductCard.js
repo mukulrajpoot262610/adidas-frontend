@@ -5,10 +5,10 @@ import commaNumber from 'comma-number';
 const ProductCard = ({ data }) => {
 
     const [checked, setChecked] = useState(false)
-    const { id, name, price, salePrice, thumbnail, category } = data;
+    const { _id, name, price, salePrice, thumbnail, category } = data;
 
     return (
-        <Link href={`/products/${id}`} passHref>
+        <Link href={`/products/${_id}`} passHref>
             <div className="w-full cursor-pointer hover:border-black border border-white">
                 <div className="relative">
                     <img src={thumbnail} alt="" />

@@ -7,8 +7,11 @@ import Info from '../components/Home/Info'
 import JoinBanner from '../components/Home/JoinBanner'
 import GENDER_LIST from '../components/List/Gender.list'
 import { HiArrowNarrowRight } from 'react-icons/hi'
+import { getAllProducts } from '../services/api'
 
 export default function Home({ products }) {
+
+  console.log(products)
 
   return (
     <div className="min-h-screen w-full">
@@ -24,7 +27,7 @@ export default function Home({ products }) {
         <div className="w-11/12 lg:w-9/12 my-10">
 
           <h1 className="font-bold text-3xl italic tracking-tighter uppercase mt-16 text-center">Popular Right Now</h1>
-          <div className='flex justify-center items-center w-full gap-4 mt-4'>
+          <div className='flex flex-wrap justify-center items-center w-full gap-4 mt-4'>
             <span className='cursor-pointer text-sm border border-gray-300 p-2 uppercase'>Face Covers</span>
             <span className='cursor-pointer text-sm border border-gray-300 p-2 uppercase'>Sneakers</span>
             <span className='cursor-pointer text-sm border border-gray-300 p-2 uppercase'>Superstar</span>
@@ -55,9 +58,9 @@ export default function Home({ products }) {
 
         <div className='w-11/12 lg:w-9/12 my-10'>
           <h1 className="font-bold text-3xl italic tracking-tighter uppercase mt-16 text-left">Best of adidas</h1>
-          <div className="grid grid-cols-4 mt-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 mt-6">
             {
-              PRODUCT_LIST.map((e) => <ProductCard data={e} key={e._id} />)
+              products?.map((e) => <ProductCard data={e} key={e._id} />)
             }
           </div>
         </div>
@@ -71,4 +74,22 @@ export default function Home({ products }) {
       </main>
     </div>
   )
+}
+
+export async function getStaticProps() {
+
+  try {
+    const res = await getAllProducts();
+
+    return {
+      props: { products: res.data.products },
+      revalidate: 10
+    }
+  } catch (err) {
+    console.log(err.message)
+
+    return {
+      props: { products: [] }
+    }
+  }
 }

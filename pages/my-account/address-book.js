@@ -5,15 +5,27 @@ import { AiOutlinePlus, AiFillDelete } from 'react-icons/ai'
 import { FaEdit } from 'react-icons/fa'
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import { useSelector } from 'react-redux';
+import AddressModal from '../../components/Modal/AddressModal'
+import { setAuth } from '../../redux/authSlice'
+import { DeleteAddress } from '../../services/api'
+import { useDispatch } from 'react-redux'
 
 const Account = () => {
 
-    const [isModalVisible, setIsModalVisible] = useState(false);
+    const dispatch = useDispatch()
+    const [showModal, setShowModal] = useState(false)
     const { user } = useSelector(state => state.auth)
+    const [selected, setSelected] = useState(0)
 
-    const showModal = () => {
-        setIsModalVisible(true);
-    };
+
+    const handleDelete = async (e) => {
+        try {
+            const { data } = await DeleteAddress(e)
+            dispatch(setAuth(data))
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
     return (
         <div className="flex flex-col items-center justify-center">
@@ -21,6 +33,11 @@ const Account = () => {
                 <title>Account - adidas Online Store</title>
                 <link passHref rel="icon" href="/favicon.ico" />
             </Head>
+
+            {
+                showModal && <AddressModal setShowModal={setShowModal} />
+            }
+
 
             <div className="container w-full p-4 px-4 lg:px-10">
                 <hr />
@@ -33,13 +50,15 @@ const Account = () => {
                         <p className="my-3 mb-8">You have <span className="font-bold"> address slots</span> remaining.</p>
 
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                            <div className="relative border border-gray-300 h-56 p-6 flex justify-between flex-col items-start hover:border-black cursor-pointer">
+                            <div className="relative border border-gray-300 h-56 p-6 flex justify-between flex-col items-start hover:border-black cursor-pointer" onClick={() => setShowModal(!showModal)}>
                                 <h1>New Address</h1>
                                 <AiOutlinePlus className="text-2xl" />
                             </div>
 
                             {
-                                user?.address?.map((e, i) => <div key={i} className="relative border border-gray-300 h-56 p-6 flex justify-between flex-col items-start hover:border-black cursor-pointer" >
+                                user.address?.map((e, i) => <div key={i} className={`relative border h-56 p-6 flex justify-between flex-col items-start hover:border-black cursor-pointer ${selected === i ? "border-black border-2" : "border-gray-300"}`}
+                                    onClick={() => setSelected(i)}
+                                >
                                     <div>
                                         <h1><span className='font-bold uppercase'>Landmark: </span>{e.landmark}</h1>
                                         <h1><span className='font-bold uppercase'>Street: </span>{e.street}</h1>
@@ -51,14 +70,13 @@ const Account = () => {
                                     <div className='flex justify-between items-end w-full'>
                                         <h1 className='text-xs underline'>Default</h1>
                                         <div className='flex'>
-                                            <FaEdit className="text-2xl mx-2" />
-                                            <AiFillDelete className="text-2xl" />
+                                            {/* <FaEdit className="text-2xl mx-2"  /> */}
+                                            <AiFillDelete className="text-2xl" onClick={() => handleDelete(e._id)} />
                                         </div>
                                     </div>
                                 </div>)
                             }
                         </div>
-
                     </div>
 
                     <div className="p-6 w-full lg:w-4/12">
@@ -73,9 +91,6 @@ const Account = () => {
                         </Link>
                         <Link passHref href="/my-account/order-history">
                             <p className="underline mt-3 cursor-pointer">Order History</p>
-                        </Link>
-                        <Link passHref href="/wishlist">
-                            <p className="underline mt-3 cursor-pointer">Wish List</p>
                         </Link>
                         <hr className="my-6 border-black" />
                         <h1 className="font-bold text-xl mt-4 uppercase">Need Help?</h1>

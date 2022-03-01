@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import { HiArrowNarrowRight } from 'react-icons/hi'
 import { useSelector, useDispatch } from 'react-redux'
-import CartCover from '../components/Card/CartCover'
 import OrderCover from '../components/Card/OrderCover'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
-// import { addOrderData } from '../redux/orderReducer'
 import BillingCard from '../components/Card/BillingCard'
+import { placeOrder } from '../services/api'
+import { setOrder } from '../redux/orderSlice'
 
 const Payment = () => {
 
@@ -16,6 +15,7 @@ const Payment = () => {
 
     const cart = useSelector(state => state.cart)
     const { user } = useSelector(state => state.auth)
+    const { shippingAddress } = useSelector(state => state.order)
     const { products, quantity, total } = cart;
 
     const [paymentMethod, setPaymentMethod] = useState(1);
@@ -23,22 +23,15 @@ const Payment = () => {
     const handlePlaceOrder = async () => {
 
         const payload = {
-            user: {
-                id: user._id,
-                firstName: user.firstName,
-                email: user.email,
-            },
             orderItems: products,
-            price: total,
             totalPrice: total,
-            delivery: 0,
-            address: JSON.parse(sessionStorage.getItem('address')),
-            paymentMethod: paymentMethod === 1 ? "Card" : "COD",
+            shippingAddress: user.address[shippingAddress],
+            paymentMethod: "COD",
         }
 
         try {
-            const res = await placeOrder(user._id, payload)
-            dispatch(addOrderData(res.data.order))
+            const res = await placeOrder(payload)
+            dispatch(setOrder(res.data.order))
             router.push('/ordercomplete')
         } catch (err) {
             console.log(err.response)
@@ -90,11 +83,7 @@ const Payment = () => {
                             {paymentMethod === 1 ? "Card" : "Cash On Delivery"}
                         </h1>
 
-                        {
-                            paymentMethod === 1 ? <button type="submit" form='card' className="cursor-pointer bg-black text-white py-4 px-6 my-4 flex items-center uppercase font-bold">Place Order &nbsp; <HiArrowNarrowRight /></button> : (
-                                <button className="cursor-pointer bg-black text-white py-4 px-6 my-4 flex items-center uppercase font-bold" onClick={handlePlaceOrder}>Place Order &nbsp; <HiArrowNarrowRight /></button>
-                            )
-                        }
+                        <button className="cursor-pointer bg-black text-white py-4 px-6 my-4 flex items-center uppercase font-bold" onClick={handlePlaceOrder}>Place Order &nbsp; <HiArrowNarrowRight /></button>
 
 
                         <hr />

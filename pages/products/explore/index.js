@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import JoinBanner from '../../../components/Home/JoinBanner';
 import ProductCard from '../../../components/Card/ProductCard';
-import PRODUCT from '../../../components/List/Product.list';
+import { getAllProducts } from '../../../services/api';
 
 const ProductList = ({ products }) => {
 
@@ -22,7 +22,7 @@ const ProductList = ({ products }) => {
             </Head>
 
             <main className="flex flex-col justify-center items-center mt-10">
-                <div className="w-10/12 mt-6 px-4 lg:px-10">
+                <div className="w-11/12 mt-6 px-2 lg:px-10">
 
                     <div className="flex mb-6">
                         <span className="uppercase underline text-black mr-4 font-bold cursor-pointer" onClick={() => router.back()}>BACK</span>
@@ -48,9 +48,9 @@ const ProductList = ({ products }) => {
 
                     <hr className='mb-4' />
 
-                    <div className="grid grid-cols-4 mt-2 mb-8 justify-center">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 mt-2 mb-8 justify-center">
                         {
-                            PRODUCT.map((e) => <ProductCard data={e} key={e.id} />)
+                            products?.map((e) => <ProductCard data={e} key={e.id} />)
                         }
                     </div>
 
@@ -72,37 +72,20 @@ const ProductList = ({ products }) => {
 export default ProductList
 
 
-// export async function getServerSideProps({ query }) {
+export async function getStaticProps() {
 
-//     let products = null;
+    try {
+        const res = await getAllProducts();
 
-//     if (Object.keys(query).length === 0) {
-//         try {
-//             const res = await getProducts();
-//             if (res.data.success) {
-//                 products = res.data.products
-//             } else {
-//                 products = []
-//             }
-//         } catch (err) {
-//             console.log(err.message)
-//         }
-//     } else {
-//         try {
-//             const res = await getFilteredProducts(query);
-//             if (res.data.success) {
-//                 products = res.data.product
-//             } else {
-//                 products = []
-//             }
-//         } catch (err) {
-//             console.log(err.message)
-//         }
-//     }
+        return {
+            props: { products: res.data.products },
+            revalidate: 10
+        }
+    } catch (err) {
+        console.log(err.message)
 
-
-
-//     return {
-//         props: { products }, // will be passed to the page component as props
-//     }
-// }
+        return {
+            props: { products: [] }
+        }
+    }
+}

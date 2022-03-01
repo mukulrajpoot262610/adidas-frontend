@@ -3,10 +3,6 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
     isAuth: false,
     user: null,
-    otp: {
-        phone: '',
-        hash: ''
-    }
 }
 
 export const authSlice = createSlice({
@@ -21,11 +17,6 @@ export const authSlice = createSlice({
             } else {
                 state.isAuth = true
             }
-        },
-        setOtp: (state, action) => {
-            const { phone, hash } = action.payload
-            state.otp.phone = phone
-            state.otp.hash = hash
         },
     },
 })

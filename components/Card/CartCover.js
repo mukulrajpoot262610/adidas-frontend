@@ -26,14 +26,14 @@ const CartCover = ({ data }) => {
     }
 
     return (
-        <div className="border-2 border-black h-60 relative">
+        <div className="border-2 border-black relative">
             <div className="flex h-full">
                 <div className="w-2/6 overflow-hidden">
                     <img src={product.image} alt="" className='object-cover object-center w-full h-full' />
                 </div>
 
                 <div className="w-4/6 p-4 px-8 pr-16">
-                    <div className="flex justify-between items-center">
+                    <div className="flex justify-between lg:items-center flex-col lg:flex-row">
                         <h1 className="font-medium text-base uppercase">{product.category}</h1>
                         <div className="flex items-center">
                             {
@@ -44,18 +44,10 @@ const CartCover = ({ data }) => {
                     </div>
                     <h1 className="font-semibold my-2 text-xl uppercase">{product.name}</h1>
                     <h1 className="font-medium text-sm uppercase">Size: {size}</h1>
-                    <select value={qty} size="large" className="bg-transparent w-16 border-2 p-1 px-2 border-black outline-none cursor-pointer active:text-white my-2" onChange={(e) => { handleChange }}>
-                        <option value={1}>1</option>
-                        <option value={2}>2</option>
-                        <option value={3}>3</option>
-                        <option value={4}>4</option>
-                        <option value={5}>5</option>
-                        <option value={6}>6</option>
-                    </select>
                 </div>
 
-                <div className="p-4 absolute right-2 top-2 flex lg:flex-col justify-between lg:justify-start items-center h-full">
-                    <GrClose className="cursor-pointer lg:mb-4" onClick={() => handleRemove(id, product.name)} />
+                <div className="absolute right-2 top-2 lg:right-6 lg:top-6">
+                    <GrClose className="cursor-pointer mb-2 lg:mb-4" onClick={() => handleRemove(id, product.name)} />
                     {
                         wishList ? <FaHeart className="cursor-pointer" onClick={() => setWishList(!wishList)} /> : <FaRegHeart className="cursor-pointer" onClick={() => setWishList(!wishList)} />
                     }

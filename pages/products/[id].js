@@ -4,6 +4,8 @@ import { HiArrowNarrowRight } from 'react-icons/hi'
 import { useDispatch } from 'react-redux'
 import PRODUCT from '../../components/List/Product.list'
 import { addProductData } from '../../redux/cartSlice'
+import { getProduct } from '../../services/api'
+import commaNumber from 'comma-number'
 
 const ProductDetail = ({ product }) => {
 
@@ -16,7 +18,7 @@ const ProductDetail = ({ product }) => {
         if (!shoeSize) return message.error('Please Select a size')
 
         const payload = {
-            id: product.id + Math.floor(Math.random() * 1000),
+            id: product._id + Math.floor(Math.random() * 1000),
             product,
             qty: +qty,
             size: shoeSize,
@@ -33,14 +35,14 @@ const ProductDetail = ({ product }) => {
 
             <div className="w-11/12 lg:w-9/12 mt-10">
 
-                <div className="flex flex-col xl:flex-row gap-8">
+                <div className="flex flex-col lg:flex-row gap-8">
 
                     <div className="w-full lg:w-1/2">
                         <img src={product.thumbnail} alt='' className='w-full object-cover' />
                     </div>
 
                     <div className="p-4 w-full lg:w-1/2">
-                        <div className='flex justify-between items-center mt-2 md:mt-32 xl:mt-0
+                        <div className='flex justify-between items-center mt-2 md:mt-32 lg:mt-0
                                 '>
                             <p className='uppercase font-bold mb-2 text-gray-400'>{product.category}</p>
                             <div className='flex items-center justify-center'>
@@ -50,9 +52,9 @@ const ProductDetail = ({ product }) => {
                         <h1 className="font-bold italic tracking-tighter text-3xl uppercase">{product.name}</h1>
                         <p className="my-2">Join the adidas Creators Club membership program:</p>
                         <div className="mt-2 mb-8">
-                            <h1 className="my-1 font-bold text-2xl text-red-700">₹{product.salePrice} <span className='text-xs text-gray-400'>[ {((product.salePrice / product.price) * 100).toFixed(0)}% discount]</span></h1>
+                            <h1 className="my-1 font-bold text-2xl text-red-700">₹{commaNumber(product.salePrice)} <span className='text-xs text-gray-400'>[ {commaNumber(((product.salePrice / product.price) * 100).toFixed(0))}% discount]</span></h1>
                             {
-                                product.salePrice === product.price ? "" : <h1 className="font-light line-through text-sm">₹{product.price}</h1>
+                                product.salePrice === product.price ? "" : <h1 className="font-light line-through text-sm">₹{commaNumber(product.price)}</h1>
                             }
                             <h1 className="font-light text-sm">(Prices include GST)</h1>
                         </div>
@@ -64,7 +66,7 @@ const ProductDetail = ({ product }) => {
                             </div>
                             <div className="flex justify-between flex-wrap mt-4">
                                 {
-                                    [7, 8, 9, 10, 11].map((e, index) => <div className={`border-2 cursor-pointer hover:border-black w-20 py-1 flex justify-center items-center m-1 ${shoeSize === e ? "border-black" : ""}`} key={index} onClick={() => setShoeSize(e)} >{e}</div>)
+                                    [7, 8, 9, 10, 11].map((e, index) => <div className={`border-2 cursor-pointer hover:border-black w-20 py-1 flex justify-center items-center ${shoeSize === e ? "border-black" : ""}`} key={index} onClick={() => setShoeSize(e)} >{e}</div>)
                                 }
                             </div>
                             <h1 className="font-bold my-4 uppercase">Quantity</h1>
@@ -137,18 +139,14 @@ export default ProductDetail
 
 export async function getServerSideProps({ query }) {
 
-    let product = PRODUCT.find(e => query.id == e.id);
+    let product = {}
 
-    // try {
-    //     const res = await getSingleProduct(query.id);
-    //     if (res.data.success) {
-    //         product = res.data.product
-    //     } else {
-    //         product = {}
-    //     }
-    // } catch (err) {
-    //     console.log(err.message)
-    // }
+    try {
+        const res = await getProduct(query.id);
+        product = res.data.product
+    } catch (err) {
+        console.log(err)
+    }
 
     return {
         props: { product }, // will be passed to the page component as props
