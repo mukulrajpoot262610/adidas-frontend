@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import BillingCard from '../components/Card/BillingCard'
 import { placeOrder } from '../services/api'
 import { setOrder } from '../redux/orderSlice'
+import { setAuth } from '../redux/authSlice'
 
 const Payment = () => {
 
@@ -32,6 +33,7 @@ const Payment = () => {
         try {
             const res = await placeOrder(payload)
             dispatch(setOrder(res.data.order))
+            dispatch(setAuth(res.data))
             router.push('/ordercomplete')
         } catch (err) {
             console.log(err.response)

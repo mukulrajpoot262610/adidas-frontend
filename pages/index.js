@@ -8,10 +8,11 @@ import JoinBanner from '../components/Home/JoinBanner'
 import GENDER_LIST from '../components/List/Gender.list'
 import { HiArrowNarrowRight } from 'react-icons/hi'
 import { getAllProducts } from '../services/api'
+import { useSelector } from 'react-redux'
 
 export default function Home({ products }) {
 
-  console.log(products)
+  const { isAuth } = useSelector(state => state.auth)
 
   return (
     <div className="min-h-screen w-full">
@@ -68,7 +69,7 @@ export default function Home({ products }) {
         <Info />
 
         {
-          <JoinBanner />
+          !isAuth && <JoinBanner />
         }
 
       </main>

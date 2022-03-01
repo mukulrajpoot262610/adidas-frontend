@@ -40,7 +40,6 @@ const AuthCard = () => {
 
                 <button type="submit" className="font-bold cursor-pointer bg-black text-white py-3 px-6 flex items-center uppercase">Log In &nbsp; <HiArrowNarrowRight /></button>
             </form>
-            <h1 className='hover:underline cursor-pointer text-right mt-4' onClick={() => router.push('/account-register?redirect=delivery')}>Don&apos;t have account? SignUp</h1>
         </div>
     </div>;
 };

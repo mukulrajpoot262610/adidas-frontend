@@ -96,7 +96,7 @@ const Login = () => {
                         <p className="mt-1 cursor-pointer flex items-center"><BsCheck2 /> &nbsp; &nbsp;Level up for exclusive access to sport, yoga and music events</p>
                         <p className="mt-1 cursor-pointer flex items-center"><BsCheck2 /> &nbsp; &nbsp;Receive our best special offers and promotions</p>
                         <p className="my-3">Join now and start earning points to access new levels and rewards. Its time to unlock the best of adidas.</p>
-                        <Link href="/account-register" passHref={true}>
+                        <Link href="/account-login" passHref={true}>
                             <button className="cursor-pointer bg-black text-white py-3 px-6 mb-4 flex items-center uppercase font-bold mt-4">Join the club &nbsp; <HiArrowNarrowRight /></button>
                         </Link>
                         <img src="https://www.adidas.co.in/glass/react/137ceff/assets/img/CC2.0_my_account_register.jpg" height={500} width={500} />
