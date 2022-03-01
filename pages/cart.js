@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { HiArrowNarrowRight } from 'react-icons/hi'
 import { useSelector } from 'react-redux'
 import CartCover from '../components/Card/CartCover'
 import BillingCard from '../components/Card/BillingCard'
+import toast, { Toaster } from 'react-hot-toast';
 
 const Cart = () => {
 
@@ -12,7 +13,7 @@ const Cart = () => {
     const { products, quantity, total } = cart;
 
     const handleCoupanCode = () => {
-        message.error("This code was not recognised, please check it and try again.")
+        toast.error("This code was not recognised, please check it and try again.")
     }
 
     return (

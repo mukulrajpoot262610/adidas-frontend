@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux'
 import { setAuth } from '../../redux/authSlice'
 import { useRouter } from 'next/router'
 import { logout, UpdateDetails } from '../../services/api'
+import toast from 'react-hot-toast'
 
 const Account = () => {
 
@@ -20,6 +21,7 @@ const Account = () => {
         try {
             const { data } = await logout()
             dispatch(setAuth(data))
+            toast.success('Logout Successfull')
             router.replace('/')
         } catch (err) {
             console.log(err)

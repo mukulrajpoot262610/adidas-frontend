@@ -2,12 +2,13 @@ import React, { useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import JoinBanner from '../components/Home/JoinBanner'
 import { BsCheck2, BsGoogle } from 'react-icons/bs'
 import { HiArrowNarrowRight } from 'react-icons/hi'
 import { SendOtp, VerifyOtp } from '../services/api'
 import { useDispatch } from 'react-redux'
 import { setAuth } from '../redux/authSlice'
+import Image from 'next/image'
+import toast, { Toaster } from 'react-hot-toast';
 
 const Login = () => {
 
@@ -19,7 +20,6 @@ const Login = () => {
     const [response, setResponse] = useState()
 
     const redirect = router.query.redirect
-    console.log(redirect)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -29,22 +29,61 @@ const Login = () => {
                 const { data } = await SendOtp({ email })
                 setShowOtp(true)
                 setResponse(data)
+
+                toast.custom((t) => (
+                    <div
+                        className={`${t.visible ? 'animate-enter' : 'animate-leave'
+                            } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+                    >
+                        <div className="flex-1 w-0 p-4">
+                            <div className="flex items-start">
+                                <div className="flex-shrink-0 pt-0.5">
+                                    <Image src="/logo.svg" height={50} width={80} alt='' className='cursor-pointer' />
+                                </div>
+                                <div className="ml-3 flex-1">
+                                    <p className="text-sm font-medium text-gray-900">
+                                        Adidas
+                                    </p>
+                                    <p className="mt-1 text-sm text-gray-500">
+                                        Your OTP for login is <span className='text-xl text-red-500 font-black'>{data.otp}</span>!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="flex border-l border-gray-200">
+                            <button
+                                onClick={() => toast.dismiss(t.id)}
+                                className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium  hover:text-indigo-500 focus:outline-none focus:ring-2"
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                ))
+
             } catch (err) {
-                console.log()
+                console.log(err)
+                toast.error(err.response.data.msg)
             }
         } else {
             try {
                 const { data } = await VerifyOtp({ ...response, otp })
                 dispatch(setAuth(data))
+                toast.success('Login Successfull')
                 redirect ? router.replace(`/${redirect}`) : router.replace('/')
             } catch (err) {
                 console.log(err)
+                toast.error(err.response.data.msg)
+                if (err.response.data.msg === 'OTP Expired') {
+                    setOtp(undefined)
+                    setShowOtp(false)
+                }
             }
         }
     }
 
     const handleGoogleLogin = () => {
-
+        toast.error("This functionality is not built yet.")
     }
 
     return (
@@ -60,13 +99,15 @@ const Login = () => {
                     {/* LEFT */}
                     <div className="w-full lg:w-6/12 p-6">
                         <h1 className="font-black text-4xl uppercase">LOG IN</h1>
-                        <Link href="/forgetpassword" passHref={true}>
-                            <p className="my-2 inline-block text-black underline cursor-pointer">Forgotten your Password?</p>
-                        </Link>
                         <form onSubmit={handleSubmit}>
-                            <input type='email' className="w-full border outline-none mt-4 p-3 px-5" placeholder="Enter Email Here..." onChange={(e) => setEmail(e.target.value)} required />
+                            <input type='email' className="w-full border outline-none mt-4 p-3 px-5" placeholder="Enter Email Here..." onChange={(e) => {
+                                setOtp(undefined)
+                                setShowOtp(false)
+                                setEmail(e.target.value)
+                            }}
+                                required />
 
-                            <label className='text-xs text-gray-400'>This will send you a OTP on your registered mail.</label>
+                            <label className='text-xs text-gray-400'>You will receive a OTP here 😅.</label>
 
 
                             {
@@ -99,7 +140,7 @@ const Login = () => {
                         <Link href="/account-login" passHref={true}>
                             <button className="cursor-pointer bg-black text-white py-3 px-6 mb-4 flex items-center uppercase font-bold mt-4">Join the club &nbsp; <HiArrowNarrowRight /></button>
                         </Link>
-                        <img src="https://www.adidas.co.in/glass/react/137ceff/assets/img/CC2.0_my_account_register.jpg" height={500} width={500} />
+                        <Image src="https://www.adidas.co.in/glass/react/137ceff/assets/img/CC2.0_my_account_register.jpg" height={300} objectFit="cover" width={700} alt="Club" />
                     </div>
 
                 </div>
