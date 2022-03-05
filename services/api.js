@@ -7,7 +7,6 @@ const api = axios.create({
         'Content-type': 'application/json',
         'Accept': 'application/json'
     }
-
 })
 
 // LIST
