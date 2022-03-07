@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux'
 import { getOrderDetail } from '../../services/api'
 import commaNumber from 'comma-number'
 import moment from 'moment'
+import OrderTrackModal from '../../components/Modal/OrderTrackModal'
 
 const OrderTracker = () => {
 

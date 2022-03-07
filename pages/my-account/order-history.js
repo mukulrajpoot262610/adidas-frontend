@@ -4,9 +4,11 @@ import Link from 'next/link'
 import { useSelector } from 'react-redux'
 import OrderHistoryCover from '../../components/Card/OrderHistoryCover'
 import { HiArrowNarrowRight } from 'react-icons/hi'
+import OrderTrackModal from '../../components/Modal/OrderTrackModal'
 
 const Account = () => {
 
+    const [showModal, setShowModal] = useState(false);
     const { user } = useSelector(state => state.auth)
 
     return (
@@ -19,6 +21,11 @@ const Account = () => {
             <div className="container w-full p-4 px-4 lg:px-10">
                 <hr />
             </div>
+
+            {
+                showModal && <OrderTrackModal setShowModal={setShowModal} />
+            }
+
 
             <div className="lg:w-9/12 w-full">
                 <div className="flex flex-col lg:flex-row gap-16">
@@ -38,7 +45,9 @@ const Account = () => {
 
 
                         <p className="mt-10">Looking for an order from a different account?</p>
-                        <p className="underline uppercase font-bold my-3 hover:bg-black hover:text-white inline-block cursor-pointer">Track the Order</p>
+                        <p className="underline uppercase font-bold my-3 hover:bg-black hover:text-white inline-block cursor-pointer"
+                        onClick={() => setShowModal(true)}
+                        >Track the Order</p>
 
                     </div>
 
