@@ -14,7 +14,7 @@ export const getAllProducts = () => api.get('/api/products')
 export const getProduct = (id) => api.get(`/api/product/${id}`)
 
 export const placeOrder = (data) => api.post('/api/place-order', data)
-export const getOrderDetail = (id) => api.get(`/api/order/${id}`)
+export const getOrderStatus = (id) => api.get(`/api/order-status/${id}`)
 
 export const SendOtp = (data) => api.post('/api/send-otp', data)
 export const VerifyOtp = (data) => api.post('/api/verify-otp', data)

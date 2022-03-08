@@ -5,10 +5,10 @@ import React, { useEffect, useState } from 'react'
 import { AiFillCar } from 'react-icons/ai'
 import { HiArrowNarrowRight } from 'react-icons/hi'
 import { useSelector } from 'react-redux'
-import { getOrderDetail } from '../../services/api'
 import commaNumber from 'comma-number'
 import moment from 'moment'
-import OrderTrackModal from '../../components/Modal/OrderTrackModal'
+import { getOrderStatus } from '../../services/api'
+import Steps from '../../components/Steps'
 
 const OrderTracker = () => {
 
@@ -16,7 +16,23 @@ const OrderTracker = () => {
 
     const { order } = router.query
     const [orderState, setOrderstate] = useState()
+    const [status, setStatus] = useState()
     const { user } = useSelector(state => state.auth)
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const { data } = await getOrderStatus(order)
+                setStatus(data)
+            } catch (err) {
+                console.log(err)
+            }
+        }
+
+        order && fetchData()
+    })
+
+    console.log(status)
 
     useEffect(() => {
         const data = user.orders.find(e => e._id === order)
@@ -38,14 +54,24 @@ const OrderTracker = () => {
 
                 {
                     orderState ? <>
-                        <h1 className="font-bold text-4xl uppercase tracking-tighter">YOUR ORDER COULDN&apos;T BE DELIVERED</h1>
+                        {
+                            status && <>
+                                <h1 className="font-bold text-4xl uppercase tracking-tighter">YOUR ORDER IS {status?.status}</h1>
+                                <div className='p-6 bg-gray-100 mt-3'>
+                                    <Steps status={status} />
+                                </div>
+                            </>
+                        }
+                        <div className='flex gap-2'>
+                            {
+                                status && status.status === 'Delivered' ? <button className="cursor-pointer hover:bg-black hover:text-white border-2 border-black py-2 px-6 my-4 flex items-center uppercase font-bold">Return/Replace Order</button> : <button className="cursor-pointer hover:bg-black hover:text-white border-2 border-black py-2 px-6 my-4 flex items-center uppercase font-bold">Cancel Order</button>
+                            }
 
-                        <div className='p-6 bg-gray-100 mt-3'>
-                            <p>We&apos;re sorry, your order wasn&apos;t delivered. You can find more info below.</p>
+
                         </div>
 
                         <h1 className="font-bold text-xl uppercase tracking-tighter mt-10">DETAILS</h1>
-                        <div className='grid grid-cols-3'>
+                        <div className='grid grid-cols-1 lg:grid-cols-3'>
                             <div>
                                 <h1 className="font-bold text-lg uppercase tracking-tighter mt-5">Order</h1>
                                 <p>{orderState._id}</p>
@@ -92,22 +118,22 @@ const OrderTracker = () => {
 
                         <h1 className="font-bold text-xl uppercase tracking-tighter mt-10">Order Total</h1>
                         <div className='w-full lg:w-1/2'>
-                            <div className='flex justify-between items-center px-4 my-3'>
+                            <div className='flex justify-between items-center my-3'>
                                 <h1 className='text-xl'>Subtotal <span className='text-sm'>({orderState.orderItems.length} Items)</span></h1>
                                 <h1 className='text-xl'>₹{commaNumber(orderState.totalPrice)}</h1>
                             </div>
 
-                            <div className='flex justify-between items-center px-4 my-3'>
+                            <div className='flex justify-between items-center my-3'>
                                 <h1 className='text-xl'>Taxes <span className='text-sm'>	(does not apply)</span></h1>
                                 <h1 className='text-xl'>₹0</h1>
                             </div>
 
-                            <div className='flex justify-between items-center px-4 my-3'>
+                            <div className='flex justify-between items-center my-3'>
                                 <h1 className='text-xl'>Shipping <span className='text-sm'>(standard)</span></h1>
                                 <h1 className='text-xl'>₹0</h1>
                             </div>
 
-                            <div className='flex justify-between items-center px-4 my-3'>
+                            <div className='flex justify-between items-center my-3'>
                                 <h1 className='text-xl font-bold'>Total</h1>
                                 <h1 className='text-xl font-bold'>₹{commaNumber(orderState.totalPrice)}</h1>
                             </div>
